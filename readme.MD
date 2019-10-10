@@ -52,12 +52,12 @@ Custom Types
   }
 }
 
+
+
 -- dotenv
 me permite almacenar de una forma segura las credenciales de las conexiones de la db de una forma segura
 
 1.  npm i dotenv
-
-
 
 sudo systemctl start mongodb
 sudo systemctl stop mongodb
@@ -69,3 +69,6 @@ https://zocada.com/setting-mongodb-users-beginners-guide/
 
 
 https://www.techrunnr.com/install-robomongo-robo-3t-on-ubuntu-18-04/
+
+
+mutation siempre va a transportar información 
