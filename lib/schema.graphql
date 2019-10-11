@@ -22,5 +22,5 @@ input CourseInput {
 
 type Mutation {
     "Create a course"
-    CreateCourse(input: CourseInput!): Course
+    createCourse(input: CourseInput!): Course
 }

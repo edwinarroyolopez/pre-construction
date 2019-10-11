@@ -52,6 +52,21 @@ Custom Types
   }
 }
 
+-- mutation
+mutation {
+  createCourse( input: {
+    	title: "Example 5"
+    	description: "Descripcion 6"
+    	topic: "Programmin"
+    	teacher: "aaaa"
+  	}
+  ) {
+    title
+    description
+    teacher
+    topic
+  }
+}
 
 
 -- dotenv
