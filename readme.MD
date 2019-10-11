@@ -44,13 +44,25 @@ Custom Types
 }
 
 -- Query
+
 {
-  getCourse(id:"anyid2") {
-    _id
+  getCourses {
+    uuid_course
     title
     description
   }
 }
+
+{
+  getCourse(uuid_course:"f5c4a820-3e76-4242-a7a9-891b94f7785b"){
+    uuid_course
+    title
+    topic
+    description
+    teacher
+  }
+}
+
 
 -- mutation
 mutation {
@@ -65,6 +77,64 @@ mutation {
     description
     teacher
     topic
+  }
+}
+
+-- DELETE COURSE
+mutation {
+  deleteCourse(uuid_course:"9bf7df3a-318d-45df-8b89-fb5a8fd97100")
+}
+
+
+-- EDIT
+ mutation {
+  editCourse(uuid_course:"f5c4a820-3e76-4242-a7a9-891b94f7785b",
+    input: {
+    	title: "Example 4"
+    	description: "New description4"
+    	topic: "Diseño"
+    	teacher: "teacher 4"
+  	}
+  ) {
+    teacher
+    topic
+  }
+}
+
+--- Student
+
+mutation {
+  createStudent( input: {
+    	name: "Pedro"
+    	email: "pedro@yopmail.com"
+  	}
+  ) {
+    uuid_student
+    name
+    email
+  } 
+}
+-- EDIT STUDENT
+
+mutation { 
+  editStudent(uuid_student:"460f75cd-29d2-4d5c-a244-d1c7c53a67df", 
+  	input: {
+    name:"juanes"
+    email:"juanes@yopmail.com"
+  }){
+  	name
+    email
+  }
+  
+}
+
+-- GET ALL STUDENTS
+
+{
+  getStudents{
+    uuid_student
+    name
+    email
   }
 }
 
