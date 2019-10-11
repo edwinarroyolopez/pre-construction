@@ -157,3 +157,15 @@ https://www.techrunnr.com/install-robomongo-robo-3t-on-ubuntu-18-04/
 
 
 mutation siempre va a transportar información 
+
+
+-- postgres
+UPDATE course
+SET students = students || '["newString"]'::jsonb
+WHERE uuid_course='49f23ec9-5532-4415-8928-07d4cb38178c'
+
+
+
+UPDATE course
+SET students =  ('{"id":123}')
+WHERE uuid_course = '49f23ec9-5532-4415-8928-07d4cb38178c' returning *
