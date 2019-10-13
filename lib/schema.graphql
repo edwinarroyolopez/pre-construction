@@ -10,8 +10,8 @@ type Course {
     title: String!
     teacher: String
     description: String!
-    topic: String
-    students: [Student]
+    topic: String @deprecated
+    students: [Person]
     level: Level
 }
 
@@ -19,7 +19,6 @@ interface Person {
     uuid_student: ID!
     name: String!
     email: String!
-    phone: String
 }
 
 
@@ -27,6 +26,7 @@ type Monitor implements Person {
     uuid_student: ID!
     name: String!
     email: String!
+    phone: String
 }
 
 type Student implements Person {
@@ -42,9 +42,9 @@ type Query {
     "Return a course"
     getCourse(uuid_course: ID!): Course
     "Return all students"
-    getStudents: [Student]
+    getPeople: [Person]
     "Return a student"
-    getStudent(uuid_student: ID!): Student
+    getPerson(uuid_student: ID!): Person
     
 }
 
@@ -64,14 +64,18 @@ input CourseEditInput {
     level: Level
 }
 
-input StudentInput {
+input PersonInput {
     name: String!
     email: String!
+    phone: String
+    avatar: String
 }
 
-input StudentEditInput {
+input PersonEditInput {
     name: String
     email: String
+    phone: String
+    avatar: String
 }
 
 type Mutation {
@@ -81,12 +85,12 @@ type Mutation {
     editCourse(uuid_course:ID! ,input: CourseEditInput!): Course
     "Delete a course"
     deleteCourse(uuid_course:ID!): Boolean
-    "Create a Student"
-    createStudent(input: StudentInput!): Student
-    "Edit a student"
-    editStudent(uuid_student:ID!, input: StudentEditInput!): Student
-    "Delete a student"
-    deleteStudent(uuid_student:ID!): Boolean
+    "Create a erson"
+    createPerson(input: PersonInput!): Person
+    "Edit a person"
+    editPerson(uuid_student:ID!, input: PersonEditInput!): Student
+    "Delete a person"
+    deletePerson(uuid_student:ID!): Boolean
     "Add a people to course"
     addPeople(uuid_course: ID!, uuid_student: ID!): Course
 }

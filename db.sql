@@ -27,3 +27,6 @@ create table student
 
 ALTER TABLE course ADD COLUMN students jsonb;
 ALTER TABLE course ADD COLUMN level text;
+
+ALTER TABLE student ADD COLUMN avatar text;
+ALTER TABLE student ADD COLUMN phone text;

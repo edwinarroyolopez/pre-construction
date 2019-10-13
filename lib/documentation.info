@@ -277,3 +277,87 @@ variables
 
 INTERFACES  -- MONITOR
 
+mutation createNewMonitor($monitorInput: PersonInput!){
+  createPerson(input: $monitorInput){
+    uuid_student
+    name
+  }
+}
+
+--- variables
+{
+  "monitorInput":  {
+    "name": "Bart Simpson",
+    "email":  "bart@gmail.com",
+    "phone": "3016453020"
+  }
+}
+
+--- GET INTERFACES
+{
+  getPeople {
+    uuid_student
+    name
+    email
+    ... on Monitor {
+      phone
+    }
+  }
+}
+--- 
+{
+  getPeople {
+    uuid_student
+    name
+    email
+    ... on Monitor {
+      phone
+    }
+    ... on Student {
+      avatar
+    }
+  }
+}
+
+
+-- DIRECTIVES
+query getPeopleData($monitor: Boolean!){
+  getPeople {
+    uuid_student
+    name
+    email
+    ... on Monitor @include(if: $monitor)  {
+      phone
+    }
+  }
+}
+
+-- variables
+{
+  "monitor": true
+}
+
+
+---
+query getPeopleData($monitor: Boolean!, $avatar: Boolean!){
+  getPeople {
+    uuid_student
+    name
+    ... on Monitor @include(if: $monitor)  {
+      phone
+    }
+    ... on Student @skip(if: $avatar)  {
+      avatar
+      email
+    }
+  }
+}
+
+-- variables
+{
+  "avatar": true,
+  "monitor": false
+}
+
+---
+
