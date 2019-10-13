@@ -139,6 +139,34 @@ mutation {
 }
 
 
+
+mutation {
+  addPeople(
+    uuid_course: "49f23ec9-5532-4415-8928-07d4cb38178c",
+    uuid_student: "46c01f89-c5a1-4a06-89ed-3c43e52a9544"
+  ) {
+    uuid_course
+    
+  }
+}
+
+
+-- Conjunto de datos: Courses
+{
+  getCourses{
+    uuid_course
+    title
+    description
+    teacher
+    topic
+    students {
+      uuid_student
+      name
+      email
+    }
+  }
+}
+
 -- dotenv
 me permite almacenar de una forma segura las credenciales de las conexiones de la db de una forma segura
 
@@ -169,3 +197,26 @@ WHERE uuid_course='49f23ec9-5532-4415-8928-07d4cb38178c'
 UPDATE course
 SET students =  ('{"id":123}')
 WHERE uuid_course = '49f23ec9-5532-4415-8928-07d4cb38178c' returning *
+
+
+To add the value use the JSON array append opperator (||)
+
+UPDATE jsontesting
+SET jsondata = jsondata || '["newString"]'::jsonb
+WHERE id = 7;
+Removing the value looks like this
+
+UPDATE jsontesting
+SET jsondata = jsondata - "newString"
+WHERE id = 7; 
+Concatenating to a nested field looks like this
+
+UPDATE jsontesting
+SET jsondata = jsonb_set(
+  jsondata::jsonb,
+  array['nestedfield'],
+  (jsondata->'nestedfield')::jsonb || '["newString"]'::jsonb) 
+
+
+  -- Para evitar que se actualicen todos los campos
+  https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node-postgres
