@@ -1,3 +1,10 @@
+"Validate the level kinds"
+enum Level {
+    beginner
+    intermediate
+    advanced
+}
+
 type Course {
     uuid_course: ID!
     title: String!
@@ -5,12 +12,28 @@ type Course {
     description: String!
     topic: String
     students: [Student]
+    level: Level
 }
 
-type Student {
+interface Person {
     uuid_student: ID!
     name: String!
     email: String!
+    phone: String
+}
+
+
+type Monitor implements Person {
+    uuid_student: ID!
+    name: String!
+    email: String!
+}
+
+type Student implements Person {
+    uuid_student: ID!
+    name: String!
+    email: String!
+    avatar: String
 }
 
 type Query {
@@ -30,6 +53,7 @@ input CourseInput {
     teacher: String
     description: String!
     topic: String
+    level: Level
 }
 
 input CourseEditInput {
@@ -37,6 +61,7 @@ input CourseEditInput {
     teacher: String
     description: String
     topic: String
+    level: Level
 }
 
 input StudentInput {

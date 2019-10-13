@@ -1,0 +1,279 @@
+
+Custom Types
+
+-- Query
+{
+  getCourses{
+    _id
+    title
+  }
+}
+
+-- Query
+
+{
+  getCourses {
+    uuid_course
+    title
+    description
+  }
+}
+
+{
+  getCourse(uuid_course:"f5c4a820-3e76-4242-a7a9-891b94f7785b"){
+    uuid_course
+    title
+    topic
+    description
+    teacher
+  }
+}
+
+
+-- mutation
+mutation {
+  createCourse( input: {
+    	title: "Example 5"
+    	description: "Descripcion 6"
+    	topic: "Programmin"
+    	teacher: "aaaa"
+  	}
+  ) {
+    title
+    description
+    teacher
+    topic
+  }
+}
+
+-- DELETE COURSE
+mutation {
+  deleteCourse(uuid_course:"9bf7df3a-318d-45df-8b89-fb5a8fd97100")
+}
+
+
+-- EDIT
+ mutation {
+  editCourse(uuid_course:"f5c4a820-3e76-4242-a7a9-891b94f7785b",
+    input: {
+    	title: "Example 4"
+    	description: "New description4"
+    	topic: "Diseño"
+    	teacher: "teacher 4"
+  	}
+  ) {
+    teacher
+    topic
+  }
+}
+
+--- Student
+
+mutation {
+  createStudent( input: {
+    	name: "Pedro"
+    	email: "pedro@yopmail.com"
+  	}
+  ) {
+    uuid_student
+    name
+    email
+  } 
+}
+-- EDIT STUDENT
+
+mutation { 
+  editStudent(uuid_student:"460f75cd-29d2-4d5c-a244-d1c7c53a67df", 
+  	input: {
+    name:"juanes"
+    email:"juanes@yopmail.com"
+  }){
+  	name
+    email
+  }
+  
+}
+
+-- GET ALL STUDENTS
+
+{
+  getStudents{
+    uuid_student
+    name
+    email
+  }
+}
+
+
+
+mutation {
+  addPeople(
+    uuid_course: "49f23ec9-5532-4415-8928-07d4cb38178c",
+    uuid_student: "46c01f89-c5a1-4a06-89ed-3c43e52a9544"
+  ) {
+    uuid_course
+    
+  }
+}
+
+
+-- Conjunto de datos: Courses
+{
+  getCourses{
+    uuid_course
+    title
+    description
+    teacher
+    topic
+    students {
+      uuid_student
+      name
+      email
+    }
+  }
+}
+
+
+FRAGMENTS
+---
+
+{
+  AllCourses: getCourses{
+    ...CourseFields
+  }
+	CourseOne: getCourse(uuid_course: "258a6464-b19b-4993-9575-1d06a8d3f349"){
+    ...CourseFields
+    teacher
+  }
+  CourseFour: getCourse(uuid_course: "2c92cbce-30c5-4cb8-abf7-005ff4206c8d"){
+    ...CourseFields
+    topic
+    students{
+      uuid_student
+      name
+      email
+    }
+  }
+}
+
+fragment CourseFields on Course {
+  uuid_course
+  title
+  description
+}
+
+
+
+  ALIAS
+  ----
+  {
+  AllCourses: getCourses{
+    uuid_course
+    title
+  }
+	CourseOne: getCourse(uuid_course: "258a6464-b19b-4993-9575-1d06a8d3f349"){
+    uuid_course
+    title
+    description
+    teacher
+  }
+  CourseFour: getCourse(uuid_course: "2c92cbce-30c5-4cb8-abf7-005ff4206c8d"){
+    uuid_course
+    title
+    description
+    teacher
+    students{
+      uuid_student
+      name
+      email
+    }
+  }
+}
+
+---
+{
+  AllCourses: getCourses{
+    ...CourseFields
+  }
+	CourseOne: getCourse(uuid_course: "258a6464-b19b-4993-9575-1d06a8d3f349"){
+    ...CourseFields
+    teacher
+  }
+  CourseFour: getCourse(uuid_course: "2c92cbce-30c5-4cb8-abf7-005ff4206c8d"){
+    ...CourseFields
+    topic    
+  }
+}
+
+fragment CourseFields on Course {
+  uuid_course
+  title
+  description
+  students{
+      uuid_student
+      name
+      email
+    }
+}
+
+
+VARS
+---
+-- Puedo usar este querie para asociar a un curso, todas las personas que yo desee
+
+mutation AddStudentToCourse2 ($uuid_course: ID!, $uuid_student: ID!){
+  addPeople( 
+  	uuid_course:$uuid_course, 
+  	uuid_student: $uuid_student){
+      uuid_course
+      description
+  }
+}
+
+-- variables
+{
+  "uuid_course": "eb5d3d41-f083-45f9-9cb3-dbd4dd76df7f",
+  "uuid_student": "460f75cd-29d2-4d5c-a244-d1c7c53a67df"
+}
+
+
+--
+query GetCourse2 ($uuid_course: ID!){
+  getCourse(uuid_course: $uuid_course){
+    uuid_course
+    title
+    description
+    students{
+      uuid_student
+      name
+      email
+    }
+  }
+}
+
+-- variables
+{
+  "uuid_course": "eb5d3d41-f083-45f9-9cb3-dbd4dd76df7f"
+}
+
+
+--- 
+
+mutation CraetaNewCourse($createinput: CourseInput!){
+  createCourse(input: $createinput)
+}
+
+variables
+---
+{
+  "createinput": {
+    "title": "Fiction Science",
+    "description": "All about fiction science",
+    "topic": "Fiction scenes",
+    "teacher": "Isaac Asimov"
+  }
+}
+
+
+INTERFACES  -- MONITOR
+

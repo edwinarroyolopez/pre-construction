@@ -23,3 +23,7 @@ create table student
     updated_at  timestamp with time zone
 );
 
+
+
+ALTER TABLE course ADD COLUMN students jsonb;
+ALTER TABLE course ADD COLUMN level text;
