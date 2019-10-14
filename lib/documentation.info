@@ -361,3 +361,26 @@ query getPeopleData($monitor: Boolean!, $avatar: Boolean!){
 
 ---
 
+
+
+UNIONS
+-----
+{
+  searchItems(keywords: "pedro"){
+    __typename
+    ... on Course{
+      title
+      description
+    }
+    ... on Monitor {
+      name
+      phone
+    }
+    ... on Student{
+      name
+      email
+    }
+  }
+}
+
+

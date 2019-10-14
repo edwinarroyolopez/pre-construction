@@ -87,3 +87,8 @@ SET jsondata = jsonb_set(
 
   -- Para evitar que se actualicen todos los campos
   https://stackoverflow.com/questions/21759852/easier-way-to-update-data-with-node-postgres
+
+
+-- keywords posgres
+https://www.postgresql.org/docs/current/textsearch-tables.html#TEXTSEARCH-TABLES-SEARCH
+https://www.compose.com/articles/mastering-postgresql-tools-full-text-search-and-phrase-search/
